@@ -8,14 +8,25 @@ int main() {
    cout<<"Input a char: ";
    cin>>ch;
    cout<<"Input character: "<<ch<<endl;
-   
-   if (ch >= 'a' && ch <= 'z')
+   char xxx[3];
+   xxx[0] = ch; 
+   if (ch >= 'a' && ch <= 'z') {
      cout<<"lower alphabet"<<endl; 
-   else if (ch >= 'A' && ch <= 'Z')
+     ch -= 32;
+     xxx[0] -= 32;
+   } 
+   else if (ch >= 'A' && ch <= 'Z'){
      cout<<"upper alphabet"<<endl;
-   else if (ch>='0' && ch<='9')
+     xxx[0] += 32;
+   } 
+   else if (ch>='0' && ch<='9'){
      cout<<"digital"<<endl; 
-   else
+     xxx[0] = ch;
+   } 
+   else {
+     xxx[0] = ch; 
      cout<<"input not alphabet and digital"<<endl;
+   }
+   cout<<endl<<xxx[0]<<endl; 
    return 0;
 }
