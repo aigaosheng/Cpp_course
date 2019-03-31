@@ -2,13 +2,14 @@
 demo do while loop 
 */
 #include<iostream> 
+#include <string.h>
 using namespace std; 
 
 int main() 
 { //block 0
 	const char name[64] = "coding is a skill";
 	
-	int name_len = sizeof(name);
+	int name_len = strlen(name);
 	cout<<"name length: "<<name_len<<endl<<endl;
 	cout<<"Demo Do .... while ]n"<<endl<<endl;
 	int loc = 0;
