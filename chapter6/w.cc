@@ -6,14 +6,12 @@
 using namespace std;
 
 int main () {
-  char *msg = new char[128];
-  ifstream myfile;
+  ofstream myfile;
   myfile.open ("doc.txt");
-  while(!myfile.eof()) {
-    myfile.getline(msg, 128);
-    cout<<msg<<endl;
-  }
+  myfile << "Line 1.\n";
+  myfile << "Line 2.";
+  myfile << " 在美涉2亿30\n";
   myfile.close();
- 
+  
   return 0;
 }

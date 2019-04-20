@@ -1,0 +1,8 @@
+#data format: student info per row
+#name(string):age(int):address(string)
+
+mike li:12:holland abc
+john ma:11:singapore 123c
+mary xiao:14:changi abc133
+mike jia:9:usa abc
+
