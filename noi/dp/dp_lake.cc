@@ -1,9 +1,9 @@
 /*
-demonstrate dynamic programming to find maximal sum problem from input array
+demonstrate dynamic programming to linked find maximal sum problem from input array
 
 */
 
-#include <iostream>
+#include <iostream>b
 #include <vector>
 #include <limits>
 
