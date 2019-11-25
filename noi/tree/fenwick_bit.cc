@@ -16,6 +16,7 @@ Author: Gao Sheng
 #include <iostream>
 #include <map>
 #include <vector>
+#include <fstream>
 
 #define MAX_ARRAY_SIZE 100001
 
@@ -25,6 +26,8 @@ using namespace std;
 int BIT[MAX_ARRAY_SIZE];
 int nArraySize;
 map<int, vector<int>> segment_idx; 
+
+fstream fsGraph;
 
 void updateBinaryIndexTree(int x, int val) {
     //parameters:
@@ -75,12 +78,28 @@ int main()
         cout<<"input array size must be less than "<<MAX_ARRAY_SIZE<<endl;
         return 1;
     }
+    fsGraph.open ("fenwickTree.txt", fstream::out);
+
     cout << "Please input your array values\n";
     //build binary indexed tree frm input array
     for(int i = 1; i <= nArraySize; i++) {
         int v;
-        cin>>v;
+        //cin>>v;
+        v = i; //generate test data
+         
         updateBinaryIndexTree(i, v);
+
+        //write latest graph to file
+        fsGraph<<i<<":"<<v<<"img";
+        for(int k = 1; k <= nArraySize; k++){
+            fsGraph<<"*"<<k<<":"<<BIT[k];
+            for(vector<int>::iterator it = segment_idx[k].begin(); it != segment_idx[k].end(); it++){
+                fsGraph<<","<<k<<":"<<*it;
+                //if(it != segment_idx[k].end()-1)
+                //    fsGraph<<",";
+            }
+        }
+        fsGraph<<endl;
     }
     //print arrray and BIT
     for(int i = 1; i <= nArraySize; i++){
@@ -92,7 +111,7 @@ int main()
         cout<<endl<<endl;
     }
     cout<<endl;
-
+    
     //test 
     //get prefix sum untill a position
     int firstPos, lastPos; 
@@ -100,6 +119,8 @@ int main()
     cin>>firstPos>>lastPos;
     cout<<"Sum of range element: "<<firstPos<<" - "<<lastPos<<" = "<<queryRange(firstPos, lastPos)<<endl;
     cout<<"Sum of first "<<lastPos<< " elements = "<<queryPoint(lastPos)<<endl;
+
+    fsGraph.close();
 
     //printf(“sum of all elements in range [2, 7] is %d\n”, query(7) – query(2-1));
     return 0;
