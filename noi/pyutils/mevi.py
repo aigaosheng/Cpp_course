@@ -7,9 +7,13 @@ import matplotlib.pyplot as plt
 
 with open('/home/gao/Work/Cpp_course/noi/tree/fenwickTree.txt') as fi:
     lns = map(lambda x: x.strip('\n'), fi.readlines())
+    #print(lns)
+    nn = 4#len(lns)
     g = Graph()
-    g.add_vertices(range(1, len(lns) + 1))
-    for imgid, ln in enumerate(fi):
+    g.add_vertices(range(1, nn + 1))
+    layout = g.layout("kk")
+    plx = plot(g, layout = layout)
+    for imgid, ln in enumerate(lns):
         nd = ln.strip('\n').split('img')
         in_id, in_v = nd[0].split(':')#current input id, value
         for i_v in nd[1].split('*'):
@@ -25,8 +29,10 @@ with open('/home/gao/Work/Cpp_course/noi/tree/fenwickTree.txt') as fi:
             #print(list(ed))
 
             g.add_edges(ed)
-            layout = g.layout("kk")
-            plot(g, layout = layout)
+            #layout = g.layout("kk")
+            #plx = plot(g, layout = layout, opacity=0.1)
+            plx.add(g)
+            plx.show()
 
         #plt.show()
         #plt.savefig('t{}.png'.format(imgid))
