@@ -33,18 +33,27 @@ void updateBinaryIndexTree(int x, int val) {
     //parameters:
     //x: the position index to be updated
     //val: value to be added to x 
+
+    //log current input index &value
+    fsGraph<<x<<":"<<val;
+    //
     int tmpx = x;
     for(; x <= nArraySize; x += x & -x) {
         BIT[x] += val;
+        //log updated tree node id and value up to now
+        fsGraph<<","<<x<<":"<<BIT[x];
+        //
         map<int, vector<int>>::iterator it = segment_idx.find(x);
         if (it != segment_idx.end())
             it->second.push_back(tmpx);
         else
         {
             segment_idx[x].push_back(tmpx);
-        }
-        
+        }        
     }
+    //new line, each line is an image to show how input value update value
+    fsGraph<<endl;
+
 }
 
 int queryPoint(int pos) {
@@ -78,7 +87,11 @@ int main()
         cout<<"input array size must be less than "<<MAX_ARRAY_SIZE<<endl;
         return 1;
     }
+    //
     fsGraph.open ("fenwickTree.txt", fstream::out);
+    for(int i = 1; i <= nArraySize; i++) 
+        fsGraph<<i<<","; //first line is node id
+    fsGraph<<endl;
 
     cout << "Please input your array values\n";
     //build binary indexed tree frm input array
@@ -89,7 +102,7 @@ int main()
          
         updateBinaryIndexTree(i, v);
 
-        //write latest graph to file
+        /*/write latest graph to file
         fsGraph<<i<<":"<<v<<"img";
         for(int k = 1; k <= nArraySize; k++){
             fsGraph<<"*"<<k<<":"<<BIT[k];
@@ -99,7 +112,7 @@ int main()
                 //    fsGraph<<",";
             }
         }
-        fsGraph<<endl;
+        fsGraph<<endl;*/
     }
     //print arrray and BIT
     for(int i = 1; i <= nArraySize; i++){
