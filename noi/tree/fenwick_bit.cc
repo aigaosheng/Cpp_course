@@ -24,9 +24,11 @@ using namespace std;
 
 //declare global arrary to store nodes of binary indexed tree
 int BIT[MAX_ARRAY_SIZE];
+int inArray[MAX_ARRAY_SIZE];
 int nArraySize;
 map<int, vector<int>> segment_idx; 
 
+//save tree update step
 fstream fsGraph;
 
 void updateBinaryIndexTree(int x, int val) {
@@ -35,13 +37,14 @@ void updateBinaryIndexTree(int x, int val) {
     //val: value to be added to x 
 
     //log current input index &value
-    fsGraph<<x<<":"<<val;
-    //
     int tmpx = x;
     for(; x <= nArraySize; x += x & -x) {
         BIT[x] += val;
         //log updated tree node id and value up to now
-        fsGraph<<","<<x<<":"<<BIT[x];
+        if(x +  (x & -x) < nArraySize)
+            fsGraph<<"["<<x<<","<<BIT[x]<<"],";
+        else
+            fsGraph<<"["<<x<<","<<BIT[x]<<"]";
         //
         map<int, vector<int>>::iterator it = segment_idx.find(x);
         if (it != segment_idx.end())
@@ -88,32 +91,33 @@ int main()
         return 1;
     }
     //
-    fsGraph.open ("fenwickTree.txt", fstream::out);
-    for(int i = 1; i <= nArraySize; i++) 
-        fsGraph<<i<<","; //first line is node id
-    fsGraph<<endl;
-
+    fsGraph.open ("fenwickTree.json", fstream::out);
+    fsGraph<<"{"<<endl;
+    fsGraph<<"\"input\": \n[";
     cout << "Please input your array values\n";
+    for(int i = 1; i <= nArraySize; i++) {
+        cin>>inArray[i];
+        if(i != nArraySize) 
+            fsGraph<<inArray[i]<<","; //first line is node id
+        else
+            fsGraph<<inArray[i]<<"],"<<endl; //first line is node id
+    }
+
     //build binary indexed tree frm input array
+    fsGraph<<"\"tree_update\": ["<<endl;
     for(int i = 1; i <= nArraySize; i++) {
         int v;
         //cin>>v;
-        v = i; //generate test data
-         
+        v = inArray[i]; //generate test data
+        fsGraph<<"[";
         updateBinaryIndexTree(i, v);
-
-        /*/write latest graph to file
-        fsGraph<<i<<":"<<v<<"img";
-        for(int k = 1; k <= nArraySize; k++){
-            fsGraph<<"*"<<k<<":"<<BIT[k];
-            for(vector<int>::iterator it = segment_idx[k].begin(); it != segment_idx[k].end(); it++){
-                fsGraph<<","<<k<<":"<<*it;
-                //if(it != segment_idx[k].end()-1)
-                //    fsGraph<<",";
-            }
-        }
-        fsGraph<<endl;*/
+        if(i < nArraySize)
+            fsGraph<<"],"<<endl;
+        else
+            fsGraph<<"]"<<endl;
     }
+    fsGraph<<"]"<<endl<<"}";
+
     //print arrray and BIT
     for(int i = 1; i <= nArraySize; i++){
         cout<<"Node id: "<<i<<", BIT value: "<<BIT[i]<<endl;

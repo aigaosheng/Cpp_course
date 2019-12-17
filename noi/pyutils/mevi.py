@@ -10,11 +10,18 @@ with open('/home/gao/Work/Cpp_course/noi/tree/fenwickTree.txt') as fi:
     #print(lns)
     nn = len(lns) - 1
     g = pgv.AGraph(directed=True)
+    
+
     #bit_nd = map(lambda x: {'label':'n%d_0'%x, 'color': 'blue'}, range(1, nn + 1))
     for n in range(1, nn + 1):
         g.add_node(n, label = 'n%d_0'%n, color='blue', shape='circle')
     
-    layout = g.layout("neato")
+    g.graph_attr["rankdir"] = "TB"
+    g.graph_attr["splines"] = "ortho"
+    g.graph_attr["ordering"] = "out"
+    g.layout(prog='dot')
+    #layout = g.layout("neato")
+    
     g.draw('t{}.png'.format(0)) #, layout = layout)
     img_count = 1
     for ln in lns[1:]:
