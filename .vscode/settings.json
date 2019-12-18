@@ -11,5 +11,6 @@
         "iostream": "cpp",
         "hash_map": "cpp",
         "iosfwd": "cpp"
-    }
+    },
+    "python.pythonPath": "/home/gao/.local/share/virtualenvs/Work-mvZ1CrFH/bin/python"
 }
