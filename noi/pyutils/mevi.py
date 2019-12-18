@@ -68,7 +68,7 @@ def buildGView(tree_node_file = '/home/gao/Work/Cpp_course/noi/tree/fenwickTree.
             gt.get_node(tik).attr['fontcolor'] = 'black'
             gt.draw('t{}.png'.format(img_count)) #, layout = layout)
             img_count += 1
-
+    #TO DO. write last GT as Tree
 
 if __name__ == '__main__':
     buildGView()
