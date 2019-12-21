@@ -30,7 +30,7 @@ def buildGView(tree_node_file = '/home/gao/Work/Cpp_course/noi/tree/fenwickTree.
 
     #create update step
     gt = pgv.AGraph(directed=True)
-    gt.add_node('input', label = 'input=', color='black', shape='rect', ratio='fill')
+    #gt.add_node('input', label = 'input=', color='black', shape='rect', ratio='fill')
     for k, _ in enumerate(tree_step['input'], start=1): #following algorithm, tree node index from 1
         gt.add_node(k, label = 'T{}, {}'.format(k, 0), color='blue', shape='circle', ratio = "fill")
     #root_id = len(tree_step['input']) + 1
@@ -51,7 +51,7 @@ def buildGView(tree_node_file = '/home/gao/Work/Cpp_course/noi/tree/fenwickTree.
         #iv is the update path when  input value is coming one-by-one, k: index position of input
         #if len(iv) == 1:
         #    iv = [iv]
-        gt.get_node('input').attr['label'] = 'input={}_{}'.format(k-1, tree_step['input'][k-1])
+        #gt.get_node('input').attr['label'] = 'input={}_{}'.format(k-1, tree_step['input'][k-1])
         for pk, iv_path in enumerate(iv):
             tik, tiv = iv_path
             if pk > 0:
@@ -66,6 +66,7 @@ def buildGView(tree_node_file = '/home/gao/Work/Cpp_course/noi/tree/fenwickTree.
             img_count += 1
 
             gt.get_node(tik).attr['fontcolor'] = 'black'
+            gt.layout(prog='dot')
             gt.draw('t{}.png'.format(img_count)) #, layout = layout)
             img_count += 1
     #TO DO. write last GT as Tree
