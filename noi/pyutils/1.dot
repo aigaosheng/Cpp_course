@@ -1,0 +1,19 @@
+strict digraph cluster_1 {
+	graph [bb="0,0,151.32,210.97",
+		color=red,
+		label=BB,
+		lheight=0.21,
+		lp="75.66,11.5",
+		lwidth=0.26,
+		rank=same
+	];
+	node [label="\N"];
+	a	 [height=1.6106,
+		label=<The<font point-size='40'> <font color='red'><b>foo</b></font></font>,<br/> the <font point-size='20'>bar</font> and<br/> the <i>baz</i>>,
+		pos="75.66,152.98",
+		width=2.1017];
+	b	 [height=0.5,
+		pos="75.66,41",
+		width=0.75];
+	a -> b	 [pos="e,75.66,59.076 75.66,94.695 75.66,85.78 75.66,76.943 75.66,69.09"];
+}

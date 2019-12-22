@@ -65,9 +65,15 @@ int queryPoint(int pos) {
     //return prefix sum untill pos, i.e. a[1]+a[2]+...+a[pos]
 
     int sv = 0;
+    fsGraph<<"[";
     for(; pos > 0; pos -= (pos & -pos)) {
         sv += BIT[pos];
+        if(pos - (pos & -pos) > 0)
+            fsGraph<<"["<<pos<<","<<sv<<"],";
+        else
+            fsGraph<<"["<<pos<<","<<sv<<"]";
     }
+    fsGraph<<"]";
     return sv;
 }
 
@@ -76,8 +82,16 @@ int queryRange(int first, int last) {
     //first: first position in array
     //last: last position in array
     //return: range sum between pos1 and pos2, i.e. a[first] + a[first+1] + ... + a[last]
-
-    return queryPoint(last) - (first > 1 ? queryPoint(first-1):0);
+    fsGraph<<"\"query_last\":";
+    int sm_last = queryPoint(last);
+    int sm_first = 0;
+    if(first > 1) {
+        fsGraph<<",\n";
+        fsGraph<<"\"query_first\":";
+        sm_first = (first > 1 ? queryPoint(first-1):0);
+    }
+    int result = sm_last - sm_first;
+    return result; //queryPoint(last) - (first > 1 ? queryPoint(first-1):0);
 }
 
 int main()
@@ -92,7 +106,7 @@ int main()
     }
     //
     fsGraph.open ("fenwickTree.json", fstream::out);
-    fsGraph<<"{"<<endl;
+    fsGraph<<"[{"<<endl;
     fsGraph<<"\"input\": \n[";
     cout << "Please input your array values\n";
     for(int i = 1; i <= nArraySize; i++) {
@@ -117,7 +131,7 @@ int main()
         else
             fsGraph<<"]"<<endl;
     }
-    fsGraph<<"]"<<endl<<"}";
+    fsGraph<<"]"<<endl<<"},";
     cout<<"** Tree building complete"<<endl;
 
     /*print arrray and BIT
@@ -133,13 +147,15 @@ int main()
     */
     //test 
     //get prefix sum untill a position
+    cout<<"** Start to test query to get sum of range points"<<endl;
     int firstPos, lastPos; 
     cout<<"Please input query range (first, last): ";
     cin>>firstPos>>lastPos;
+    fsGraph<<"\n{\n";
+    fsGraph<<"\"input\": ["<<firstPos<<","<<lastPos<<"],\n";
     cout<<"Sum of range element: "<<firstPos<<" - "<<lastPos<<" = "<<queryRange(firstPos, lastPos)<<endl;
-    cout<<"Sum of first "<<lastPos<< " elements = "<<queryPoint(lastPos)<<endl;
-
-    //update
+    fsGraph<<"\n}]\n";
+    //cout<<"Sum of first "<<lastPos<< " elements = "<<queryPoint(lastPos)<<endl;
 
 
     fsGraph.close();
