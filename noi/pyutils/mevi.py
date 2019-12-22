@@ -35,7 +35,7 @@ def buildGView(tree_node_file = '/home/gao/Work/Cpp_course/noi/tree/fenwickTree.
     '''
     with open(tree_node_file) as fi:
         tree_step = json.load(fi)
-    
+    print(tree_step)
     image_slides = []
     #creat graph to hold input data & graph
     g_containter = pgv.AGraph(directed=True, label = "Tree update")
@@ -111,6 +111,7 @@ if __name__ == '__main__':
     parser.add_argument('--save', action='store', help='gif file name')
     me_arg = parser.parse_args()
     try:
+        me_arg.input = '/home/gao/Work/Cpp_course/noi/tree/fenwickTree.json'
         if me_arg.input and me_arg.save:
             buildGView(me_arg.input, me_arg.save)
         else:

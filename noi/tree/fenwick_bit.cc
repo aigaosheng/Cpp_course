@@ -41,7 +41,7 @@ void updateBinaryIndexTree(int x, int val) {
     for(; x <= nArraySize; x += x & -x) {
         BIT[x] += val;
         //log updated tree node id and value up to now
-        if(x +  (x & -x) < nArraySize)
+        if(x +  (x & -x) <= nArraySize)
             fsGraph<<"["<<x<<","<<BIT[x]<<"],";
         else
             fsGraph<<"["<<x<<","<<BIT[x]<<"]";
@@ -105,6 +105,7 @@ int main()
 
     //build binary indexed tree frm input array
     fsGraph<<"\"tree_update\": ["<<endl;
+    cout<<"** Start building fenwick tree ...."<<endl;
     for(int i = 1; i <= nArraySize; i++) {
         int v;
         //cin>>v;
@@ -117,8 +118,9 @@ int main()
             fsGraph<<"]"<<endl;
     }
     fsGraph<<"]"<<endl<<"}";
+    cout<<"** Tree building complete"<<endl;
 
-    //print arrray and BIT
+    /*print arrray and BIT
     for(int i = 1; i <= nArraySize; i++){
         cout<<"Node id: "<<i<<", BIT value: "<<BIT[i]<<endl;
         cout<<"Array id in the node: ";
@@ -128,7 +130,7 @@ int main()
         cout<<endl<<endl;
     }
     cout<<endl;
-    
+    */
     //test 
     //get prefix sum untill a position
     int firstPos, lastPos; 
@@ -136,6 +138,9 @@ int main()
     cin>>firstPos>>lastPos;
     cout<<"Sum of range element: "<<firstPos<<" - "<<lastPos<<" = "<<queryRange(firstPos, lastPos)<<endl;
     cout<<"Sum of first "<<lastPos<< " elements = "<<queryPoint(lastPos)<<endl;
+
+    //update
+
 
     fsGraph.close();
 
