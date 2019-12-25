@@ -6,6 +6,8 @@ import json
 import io
 import argparse
 from PIL import Image, ImageColor
+import cv2
+import numpy as np
 
 slide_duration = 500
 def nd_name(prefix, k):    
@@ -20,7 +22,14 @@ def generateGif(image_slides, file_name):
         x_shift=int((mx_x - img.size[0]) / 2)
         img_bg.paste(img, box = (x_shift, y_shift, x_shift + img.size[0], y_shift + img.size[1]))
         image_slides[k] = img_bg
-    image_slides[0].save(file_name, save_all=True, append_images=image_slides[1:], duration=slide_duration)#, loop = -1)
+    image_slides[0].save(file_name + ".gif", save_all=True, append_images=image_slides[1:], duration=slide_duration)#, loop = -1)
+    generateVideo(image_slides, file_name, size=(mx_x, mx_y))
+
+def generateVideo(image_slides, file_name, size=(640, 480)):
+    v_writer = cv2.VideoWriter(file_name + ".avi", cv2.VideoWriter_fourcc(*"MJPG"), 1., size)
+    for frame in image_slides:
+        v_writer.write(cv2.cvtColor(np.array(frame), cv2.COLOR_RGB2BGR))
+    v_writer.release()
 
 def graph2image(g, save_file = None):
     if save_file:
@@ -171,7 +180,7 @@ def buildGView(tree_node_file = '/home/gao/Work/Cpp_course/noi/tree/fenwickTree.
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--input', action='store', help='json-format data to build graph')
-    parser.add_argument('--save', action='store', help='gif file name')
+    parser.add_argument('--save', action='store', help='prefix-file name to save as gif and video')
     parser.add_argument('--duration', type = int, action='store', help='each slide duration')
     
     me_arg = parser.parse_args()
